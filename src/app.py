@@ -42,6 +42,10 @@ activities = {
 }
 
 
+@app.get("/hello")
+def hello():
+    return {"message": "Hello, Copilot!"}
+
 @app.get("/")
 def root():
     return RedirectResponse(url="/static/index.html")
