@@ -42,6 +42,10 @@ activities = {
 }
 
 
+@app.get("/hello")
+def hello():
+    return {"message": "Hello, Copilot!"}
+
 @app.get("/")
 def root():
     return RedirectResponse(url="/static/index.html")
@@ -63,5 +67,8 @@ def signup_for_activity(activity_name: str, email: str):
     activity = activities[activity_name]
 
     # Add student
+    # Add student only if not already registered
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Student already registered for this activity")
     activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
